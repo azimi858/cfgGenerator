@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CFG
@@ -70,8 +73,8 @@ namespace CFG
 
 				string savePath = label9.Text;
 
-				stream = new System.IO.StreamWriter	(path: savePath, append: false, encoding: utf8WithoutBom);
-				
+				stream = new System.IO.StreamWriter(path: savePath, append: false, encoding: utf8WithoutBom);
+
 
 				string t1 = textBox1.Text;
 				string t2 = textBox2.Text;
@@ -125,7 +128,7 @@ namespace CFG
 				#endregion
 
 				textBox9.Text = sw.ToString();
-				
+
 				stream.Write(sw.ToString());
 
 				//stream.Write(Environment.NewLine);
@@ -150,17 +153,70 @@ namespace CFG
 			button3.Enabled = true;
 		}
 
+
+		static void LaunchCommandLineApp()
+		{
+			// For the example
+			const string ex1 = "C:\\";
+			const string ex2 = "C:\\Dir";
+
+			// Use ProcessStartInfo class
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.CreateNoWindow = false;
+			startInfo.UseShellExecute = false;
+			startInfo.FileName = "help.exe";
+			startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+
+			try
+			{
+				// Start the process with the info we specified.
+				// Call WaitForExit and then the using statement will close.
+				using (Process exeProcess = Process.Start(startInfo))
+				{
+					exeProcess.WaitForExit();
+				}
+			}
+			catch
+			{
+				// Log error.
+			}
+		}
+
+
 		private void button4_Click(object sender, EventArgs e)
 		{
-			//myString.Substring(myString.Length - 3)
-
-			//string filesPath = filesPath.Substring(filesPath.Length -4 );
-
-			string opensslPathOnly = opensslPath.Remove(opensslPath.Length -4);
+			string opensslPathOnly = opensslPath.Remove(opensslPath.Length - 4);
 			string opensslCommand = $"{opensslPathOnly} req -config {cfgPath}\\sysBankers.cfg -newkey rsa:2048 -keyout \"{cfgPath}\\keyPrivate.key\" -out \"{cfgPath}\\certRequest.csr\" -utf8";
 			string cmdCommand = $"/k {opensslCommand}";
 
-			System.Diagnostics.Process.Start("CMD.exe", cmdCommand); 
+			Process myProc = Process.Start("CMD.exe", cmdCommand);
+			//Thread.Sleep(5000);
+			//myProc.CloseMainWindow();
+			//this.Close();
 		}
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			ExtractResource("CFG." + "help1.exe");
+		}
+
+
+		public void ExtractResource(string resource)
+		{
+			string exePath = "help1.exe";
+
+			Stream stream = GetType().Assembly.GetManifestResourceStream(resource);
+
+			if (stream != null)
+			{
+				byte[] bytes = new byte[(int)stream.Length];
+				stream.Read(bytes, 0, bytes.Length);
+				File.WriteAllBytes(exePath, bytes);
+				System.Diagnostics.Process.Start(exePath); 
+			}
+			
+		}
+
 	}
 }
