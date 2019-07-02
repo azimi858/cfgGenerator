@@ -11,12 +11,23 @@ namespace CFG
 			InitializeComponent();
 		}
 
+		string cfgPath = string.Empty;
+		string opensslPath = string.Empty;
+
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			button3.Enabled = false;
+			button1.Enabled = false;
+			button4.Enabled = false;
+		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
 			folderBrowserDialog1.ShowDialog();
-			string pathAddress = folderBrowserDialog1.SelectedPath.ToString();
-			label9.Text = $"{pathAddress}\\sysBankers.cfg";
+			cfgPath = folderBrowserDialog1.SelectedPath.ToString();
+			label9.Text = $"{cfgPath}\\sysBankers.cfg";
+
+			button1.Enabled = true;
 		}
 
 
@@ -26,14 +37,17 @@ namespace CFG
 			dlg.Filter = "|openssl.exe";
 			dlg.FileName = "openssl.exe";
 
-
-
 			dlg.ShowDialog();
-			//openFileDialog1.ShowDialog();
+
+			opensslPath = dlg.FileName;
+			label11.Text = opensslPath;
+
+			button4.Enabled = true;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
+
 			if (string.IsNullOrEmpty(textBox1.Text) ||
 				string.IsNullOrEmpty(textBox2.Text) ||
 				string.IsNullOrEmpty(textBox3.Text) ||
@@ -50,14 +64,14 @@ namespace CFG
 
 			System.IO.StreamWriter stream = null;
 
-
 			try
 			{
 				Encoding utf8WithoutBom = new UTF8Encoding(false);
 
-				string pathAddress = label9.Text;
+				string savePath = label9.Text;
 
-				stream = new System.IO.StreamWriter	(path: pathAddress, append: true, encoding: utf8WithoutBom);
+				stream = new System.IO.StreamWriter	(path: savePath, append: false, encoding: utf8WithoutBom);
+				
 
 				string t1 = textBox1.Text;
 				string t2 = textBox2.Text;
@@ -69,6 +83,7 @@ namespace CFG
 
 
 				StringBuilder sw = new StringBuilder();
+				#region [ body ]
 				sw.Append($"###############################################{Environment.NewLine}");
 				sw.Append($"## CUSTOMERS SYSTEM CERTIFICATE SUBJECT INFO ##{Environment.NewLine}");
 				sw.Append($"###############################################{Environment.NewLine}");
@@ -107,16 +122,17 @@ namespace CFG
 				sw.Append($"{Environment.NewLine}");
 				sw.Append($"[ alt_names ]{Environment.NewLine}");
 				sw.Append($"DNS.1 = $ENV::orgURL");
-
+				#endregion
 
 				textBox9.Text = sw.ToString();
+				
 				stream.Write(sw.ToString());
 
 				//stream.Write(Environment.NewLine);
 
 				stream.Close();
 
-				MessageBox.Show("فایل متنی با موفقیت ایجاد یا ذخیره گردید ...");
+				MessageBox.Show($"فایل با موفقیت ایجاد گردید ...{Environment.NewLine}{cfgPath}\\sysBankers.cfg");
 
 			}
 			catch (System.Exception ex)
@@ -131,8 +147,20 @@ namespace CFG
 					stream = null;
 				}
 			}
+			button3.Enabled = true;
 		}
 
+		private void button4_Click(object sender, EventArgs e)
+		{
+			//myString.Substring(myString.Length - 3)
 
+			//string filesPath = filesPath.Substring(filesPath.Length -4 );
+
+			string opensslPathOnly = opensslPath.Remove(opensslPath.Length -4);
+			string opensslCommand = $"{opensslPathOnly} req -config {cfgPath}\\sysBankers.cfg -newkey rsa:2048 -keyout \"{cfgPath}\\keyPrivate.key\" -out \"{cfgPath}\\certRequest.csr\" -utf8";
+			string cmdCommand = $"/k {opensslCommand}";
+
+			System.Diagnostics.Process.Start("CMD.exe", cmdCommand); 
+		}
 	}
 }

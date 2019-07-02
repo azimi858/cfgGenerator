@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CFG")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CSR-PK-Creator")]
+[assembly: AssemblyDescription("CSR and Private Key Creator")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CFG")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Informatics Services Novin-Kish Corporation")]
+[assembly: AssemblyProduct("CSR-PK-Creator")]
+[assembly: AssemblyCopyright("Modern ISC Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
