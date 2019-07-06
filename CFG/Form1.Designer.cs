@@ -65,6 +65,7 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.button5 = new System.Windows.Forms.Button();
+			this.label19 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -399,6 +400,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.label19);
 			this.groupBox3.Controls.Add(this.button5);
 			this.groupBox3.Controls.Add(this.label10);
 			this.groupBox3.Controls.Add(this.button3);
@@ -425,6 +427,16 @@
 			this.button5.UseVisualStyleBackColor = false;
 			this.button5.Click += new System.EventHandler(this.button5_Click);
 			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.Color.Gray;
+			this.label19.Location = new System.Drawing.Point(418, 112);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(214, 13);
+			this.label19.TabIndex = 24;
+			this.label19.Text = "حداقل طول پسورد برای کلید 8 کاراکتر میباشد";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,7 +453,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "سازمان بهداد";
+			this.Text = "CSR کلید و CFG تولید فایل";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -492,6 +504,7 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Label label19;
 	}
 }
 
