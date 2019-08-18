@@ -1,0 +1,13 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+
+
+
+string opensslPathOnly = opensslPath.Remove(opensslPath.Length - 4);
+string opensslCommand = $"{opensslPathOnly} req -config {cfgPath}\\sysBankers.cfg -newkey rsa:2048 -keyout \"{cfgPath}\\keyPrivate.key\" -out \"{cfgPath}\\certRequest.csr\" -utf8";
+string cmdCommand = $"/k {opensslCommand}";
+
+Process myProc = Process.Start("CMD.exe", cmdCommand);
