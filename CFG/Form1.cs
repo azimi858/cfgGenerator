@@ -22,6 +22,7 @@ namespace CFG
 			button3.Enabled = false;
 			button1.Enabled = false;
 			button4.Enabled = false;
+
 		}
 
 		private void button2_Click(object sender, EventArgs e)
