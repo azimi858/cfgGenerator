@@ -19,6 +19,7 @@ namespace CFG
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+
 			button3.Enabled = false;
 			button1.Enabled = false;
 			button4.Enabled = false;
