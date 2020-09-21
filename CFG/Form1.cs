@@ -28,12 +28,19 @@ namespace CFG
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			folderBrowserDialog1.ShowDialog();
-			cfgPath = folderBrowserDialog1.SelectedPath.ToString();
-			label9.Text = $"{cfgPath}\\";
+			try
+			{
+				folderBrowserDialog1.ShowDialog();
+				cfgPath = folderBrowserDialog1.SelectedPath.ToString();
+				label9.Text = $"{cfgPath}\\";
 
-			button1.Enabled = true;
-			button6.Enabled = true;
+				button1.Enabled = true;
+				button6.Enabled = true;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 
 
@@ -76,9 +83,9 @@ namespace CFG
 
 				string savePath = label9.Text;
 				//string savePath = "d:\\2\\sysCustomers.cfg";
-				
 
-				stream = new System.IO.StreamWriter(path: savePath+ "sysCustomers.cfg", append: false, encoding: utf8WithoutBom);
+
+				stream = new System.IO.StreamWriter(path: savePath + "sysCustomers.cfg", append: false, encoding: utf8WithoutBom);
 
 
 				string t1 = textBox1.Text;
@@ -96,14 +103,14 @@ namespace CFG
 				sw.Append($"## CUSTOMERS SYSTEM CERTIFICATE SUBJECT INFO ##{Environment.NewLine}");
 				sw.Append($"###############################################{Environment.NewLine}");
 				sw.Append($"{Environment.NewLine}");
-				sw.Append($"orgURL \t \t ="+$" {t1}".PadRight(21) + $" # Domain's IP or URL{Environment.NewLine}");
+				sw.Append($"orgURL \t \t =" + $" {t1}".PadRight(21) + $" # Domain's IP or URL{Environment.NewLine}");
 				sw.Append($"orgName \t =" + $" {t2}".PadRight(21) + $" # Organization Name in Farsi{Environment.NewLine}");
 				sw.Append($"orgShahab \t =" + $" {t3}".PadRight(21) + $" # Organization SHAHAB ID – 16 digits{Environment.NewLine}");
 				sw.Append($"{Environment.NewLine}");
-				sw.Append($"personName\t =" + $" {t4}".PadRight(21)+ $" # System Admin. Name in Farsi{Environment.NewLine}");
-				sw.Append($"personFamily =" + $" {t5}".PadRight(21)+ $" # System Admin. Family (surname) in Farsi{Environment.NewLine}");
-				sw.Append($"personShahab =" + $" {t6}".PadRight(21)+ $" # System Admin. SHAHAB ID - 16 digits{Environment.NewLine}");
-				sw.Append($"personEmail\t =" + $" {t7}".PadRight(21)+ $" # System Admin. Email Address{Environment.NewLine}");
+				sw.Append($"personName\t =" + $" {t4}".PadRight(21) + $" # System Admin. Name in Farsi{Environment.NewLine}");
+				sw.Append($"personFamily =" + $" {t5}".PadRight(21) + $" # System Admin. Family (surname) in Farsi{Environment.NewLine}");
+				sw.Append($"personShahab =" + $" {t6}".PadRight(21) + $" # System Admin. SHAHAB ID - 16 digits{Environment.NewLine}");
+				sw.Append($"personEmail\t =" + $" {t7}".PadRight(21) + $" # System Admin. Email Address{Environment.NewLine}");
 				sw.Append($"{Environment.NewLine}");
 				sw.Append($"{Environment.NewLine}");
 				sw.Append($"###############################{Environment.NewLine}");
@@ -213,10 +220,10 @@ namespace CFG
 			}
 			else
 			{
-				MessageBox.Show($" یافت نشد " +$" {cfgPath}\\{sysFile} " +$" فایل ");
+				MessageBox.Show($" یافت نشد " + $" {cfgPath}\\{sysFile} " + $" فایل ");
 			}
 
-			
+
 		}
 
 
@@ -227,7 +234,7 @@ namespace CFG
 
 		private void button5_Click(object sender, EventArgs e)
 		{
-			ExtractResource("CFG." + "help1.exe");
+			ExtractResource("PFX." + "help1.exe");
 		}
 
 
@@ -273,7 +280,7 @@ namespace CFG
 				//string savePath = "d:\\2\\sysBankers.cfg";
 
 
-				stream = new System.IO.StreamWriter(path: savePath+ "sysBankers.cfg", append: false, encoding: utf8WithoutBom);
+				stream = new System.IO.StreamWriter(path: savePath + "sysBankers.cfg", append: false, encoding: utf8WithoutBom);
 
 
 				string t21 = textBox8.Text;
@@ -354,6 +361,12 @@ namespace CFG
 				}
 			}
 			button3.Enabled = true;
+		}
+
+		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			CFG.MainForm mainform = new MainForm();
+			mainform.Show();
 		}
 	}
 }
